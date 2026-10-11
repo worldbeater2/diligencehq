@@ -1,0 +1,10 @@
+{
+  "name": "diligencehq",
+  "compatibility_date": "2026-10-01",
+  // The site is a static export (`next build` writes it to out/), served as assets.
+  "assets": {
+    "directory": "./out",
+    "not_found_handling": "404-page",
+    "html_handling": "auto-trailing-slash"
+  }
+}

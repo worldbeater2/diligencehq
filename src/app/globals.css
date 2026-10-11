@@ -1,26 +1,91 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* Dark styles in the DARA illustrations apply only under an explicit .dark
+   class, never from the OS setting: this site is light by design. */
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-inter-tight);
+  --font-mono: var(--font-mono-face);
+
+  --color-paper: #f3f3f1;
+  --color-paper-2: #ebebe8;
+  --color-ink: #0d0d0d;
+  --color-ink-2: #2e2e2c;
+  --color-mute: #6b6b67;
+  --color-faint: #a3a39e;
+  --color-line: #dcdcd8;
+  --color-line-2: #e7e7e3;
+
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root {
+  color-scheme: light;
+}
+
+html {
+  background: var(--color-paper);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  font-feature-settings: "ss01", "cv11";
+}
+
+::selection {
+  background: #0d0d0d;
+  color: #f3f3f1;
+}
+
+/* Lenis */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* Focus: one quiet ring everywhere. */
+:focus-visible {
+  outline: 1.5px solid #0d0d0d;
+  outline-offset: 3px;
+}
+
+@layer components {
+  .display {
+    font-family: var(--font-inter-tight), ui-sans-serif, system-ui, sans-serif;
+    letter-spacing: -0.045em;
+    font-weight: 500;
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono-face), ui-monospace, monospace;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-mute);
+  }
+
+  /* The halftone wordmark at the foot of every page. */
+  .halftone-text {
+    background-image: radial-gradient(circle, #0d0d0d 0.9px, transparent 1.25px);
+    background-size: 5px 5px;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
 }

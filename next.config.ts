@@ -1,9 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  cacheComponents: true,
-  partialPrefetching: true,
+  // Every page is static, so the site builds to plain files in `out/`
+  // and is served by Cloudflare as static assets (see wrangler.jsonc).
+  output: "export",
+  trailingSlash: false,
   turbopack: {
     rules: {
       "*.css": {
