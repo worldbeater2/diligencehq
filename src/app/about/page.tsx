@@ -14,11 +14,9 @@ export const metadata: Metadata = {
 const offset = 'xl:pl-[220px]';
 
 const index = [
-  { id: 'about', label: 'About' },
-  { id: 'complex-work', label: 'Complex work' },
-  { id: 'why', label: 'Why Diligence' },
-  { id: 'chapter', label: 'First chapter' },
-  { id: 'company', label: 'Company' },
+  { label: 'About', ids: ['about', 'complex-work'] },
+  { label: 'Why Diligence', ids: ['why', 'chapter'] },
+  { label: 'Company', ids: ['company'] },
 ];
 
 const details = [

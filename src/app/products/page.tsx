@@ -18,10 +18,9 @@ const body = 'text-[17px] leading-[1.7] text-ink-2';
 const offset = 'xl:pl-[220px]';
 
 const index = [
-  { id: 'products', label: 'Products' },
-  { id: 'lawyers', label: 'DARA for Lawyers' },
-  { id: 'enterprise', label: 'DARA Enterprise' },
-  { id: 'context', label: 'Context' },
+  { label: 'Overview', ids: ['products'] },
+  { label: 'DARA', ids: ['lawyers'] },
+  { label: 'Enterprise', ids: ['enterprise', 'context'], sub: true },
 ];
 
 export default function ProductsPage() {

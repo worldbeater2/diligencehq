@@ -8,6 +8,7 @@
 import { useEffect, useRef } from 'react';
 import { orbit, scrollMotion } from '@/lib/orbit';
 import { drawHalftoneSphere } from './halftone-core';
+import { createTextMask } from './text-mask';
 
 const FRAME_MS = 1000 / 30;
 
@@ -49,7 +50,8 @@ export function OrbitCanvas() {
       const radius = orbit.size * short * (mobile ? 0.82 : 1);
       const x = mobile ? 0.5 + (orbit.x - 0.5) * 0.3 : orbit.x;
       const spacing = Math.max(5, orbit.grid * (mobile ? 0.88 : 1));
-      const key = `${x.toFixed(4)}|${orbit.y.toFixed(4)}|${radius.toFixed(2)}|${orbit.theta.toFixed(4)}|${orbit.opacity.toFixed(3)}|${spin.toFixed(4)}|${spacing.toFixed(2)}`;
+      // Text moves with scroll, so the scroll position is part of what is drawn.
+      const key = `${Math.round(window.scrollY)}|${x.toFixed(4)}|${orbit.y.toFixed(4)}|${radius.toFixed(2)}|${orbit.theta.toFixed(4)}|${orbit.opacity.toFixed(3)}|${spin.toFixed(4)}|${spacing.toFixed(2)}`;
       if (key === previous) return;
       previous = key;
       drawHalftoneSphere(ctx, {
@@ -62,6 +64,8 @@ export function OrbitCanvas() {
         theta: orbit.theta,
         spin,
         opacity: orbit.opacity * (mobile ? 0.42 : 1),
+        // Dots thin out beneath text so it always reads cleanly.
+        mask: orbit.opacity > 0.002 ? textMask.update(width, height) : undefined,
       });
     };
 
@@ -80,6 +84,7 @@ export function OrbitCanvas() {
       draw();
     };
 
+    const textMask = createTextMask();
     resize();
     const observer = new ResizeObserver(resize);
     observer.observe(canvas);
@@ -87,6 +92,7 @@ export function OrbitCanvas() {
     return () => {
       window.cancelAnimationFrame(frame);
       observer.disconnect();
+      textMask.dispose();
     };
   }, []);
 

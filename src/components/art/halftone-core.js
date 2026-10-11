@@ -65,6 +65,10 @@ export function valueNoise3(x, y, z) {
  * @param {number} [o.opacity=1]
  * @param {string} [o.ink='#0d0d0d']
  * @param {boolean} [o.clear=true]
+ * @param {{data: Float32Array, cols: number, rows: number, cell: number}} [o.mask]
+ *        Optional coverage grid in [0, 1] over the canvas: dots shrink where it
+ *        is high, so text above the canvas stays readable.
+ * @param {number} [o.maskStrength=0.72] How far covered dots shrink (1 hides them).
  */
 export function drawHalftoneSphere(ctx, o) {
   const {
@@ -83,6 +87,8 @@ export function drawHalftoneSphere(ctx, o) {
     opacity = 1,
     ink = '#0d0d0d',
     clear = true,
+    mask,
+    maskStrength = 0.72,
   } = o;
 
   if (clear) ctx.clearRect(0, 0, width, height);
@@ -152,7 +158,12 @@ export function drawHalftoneSphere(ctx, o) {
       }
 
       if (v > 0.03) {
-        const r = maxDot * Math.min(1, Math.pow(v, 0.8));
+        let r = maxDot * Math.min(1, Math.pow(v, 0.8));
+        if (mask) {
+          const mc = Math.floor(x / mask.cell);
+          const mr = Math.floor(y / mask.cell);
+          if (mc >= 0 && mr >= 0 && mc < mask.cols && mr < mask.rows) r *= 1 - maskStrength * mask.data[mr * mask.cols + mc];
+        }
         if (r > 0.35) {
           ctx.moveTo(x + r, y);
           ctx.arc(x, y, r, 0, Math.PI * 2);

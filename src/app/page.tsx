@@ -10,14 +10,11 @@ import { ComplexWork, FirstChapter, WhyDiligence } from '@/components/site/secti
 import { ButtonLink, Container, Label } from '@/components/site/ui';
 
 const index = [
-  { id: 'overview', label: 'Overview' },
-  { id: 'complex-work', label: 'Complex work' },
-  { id: 'dara', label: 'DARA' },
-  { id: 'enterprise', label: 'DARA Enterprise' },
-  { id: 'context', label: 'Context' },
-  { id: 'why', label: 'Why Diligence' },
-  { id: 'chapter', label: 'First chapter' },
-  { id: 'contact', label: 'Contact' },
+  { label: 'Overview', ids: ['overview', 'complex-work'] },
+  { label: 'DARA', ids: ['dara'] },
+  { label: 'Enterprise', ids: ['enterprise', 'context'], sub: true },
+  { label: 'Why Diligence', ids: ['why', 'chapter'] },
+  { label: 'Contact', ids: ['contact'] },
 ];
 
 const body = 'text-[17px] leading-[1.7] text-ink-2';
