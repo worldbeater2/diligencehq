@@ -12,16 +12,10 @@ export function Frame() {
           <span className="absolute -right-[3.5px] top-[71px] h-[7px] w-[7px] border border-line bg-paper" />
         </div>
       </div>
-      <svg aria-hidden className="pointer-events-none fixed inset-0 z-[80] h-full w-full opacity-[0.32] mix-blend-multiply">
-        <filter id="grain">
-          <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch" />
-          <feColorMatrix type="saturate" values="0" />
-          <feComponentTransfer>
-            <feFuncA type="table" tableValues="0 0.16" />
-          </feComponentTransfer>
-        </filter>
-        <rect width="100%" height="100%" filter="url(#grain)" />
-      </svg>
+      {/* The grain is the SVG noise filter rendered once into a tile
+          (public/media/grain*.webp), so the browser does not regenerate
+          full-screen noise and re-blend it on every frame. */}
+      <div aria-hidden className="grain pointer-events-none fixed inset-0 z-[80] mix-blend-multiply" />
     </>
   );
 }

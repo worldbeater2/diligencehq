@@ -33,8 +33,8 @@ export default function ProductsPage() {
         <VideoBackground />
         <Container className={`relative py-24 ${offset}`}>
           <Label>Products</Label>
-          <SplitWords as="h1" text="Our first product is DARA." className="display mt-8 max-w-[12ch] text-[clamp(48px,7.6vw,116px)] leading-[0.96]" />
-          <FadeUp delay={0.35} className="mt-8 max-w-[520px]">
+          <SplitWords as="h1" instant text="Our first product is DARA." className="display mt-8 max-w-[12ch] text-[clamp(48px,7.6vw,116px)] leading-[0.96]" />
+          <FadeUp instant delay={0.35} className="mt-8 max-w-[520px]">
             <p className="text-[clamp(17px,1.5vw,20px)] leading-[1.6] text-ink-2">
               DARA is our legal AI platform. We are building DARA around a simple idea: legal problems should be identified as close as possible to the point where the work happens.
             </p>

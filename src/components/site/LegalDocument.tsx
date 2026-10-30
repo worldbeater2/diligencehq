@@ -19,8 +19,8 @@ export function LegalDocument({ label, title, updated, intro, sections }: {
       <section data-orbit="x:.9 y:.2 size:.18 theta:1.7 opacity:.35 grid:6" className="pt-[72px]">
         <Container className="py-24 xl:pl-[220px]">
           <Label>{label}</Label>
-          <SplitWords as="h1" text={title} className="display mt-8 text-[clamp(44px,6.4vw,96px)] leading-[0.98]" />
-          <FadeUp delay={0.3} className="mt-8 max-w-[640px] space-y-4">
+          <SplitWords as="h1" instant text={title} className="display mt-8 text-[clamp(44px,6.4vw,96px)] leading-[0.98]" />
+          <FadeUp instant delay={0.3} className="mt-8 max-w-[640px] space-y-4">
             <p className="text-[13px] text-mute">Last updated {updated}</p>
             <div className="text-[17px] leading-[1.7] text-ink-2">{intro}</div>
           </FadeUp>

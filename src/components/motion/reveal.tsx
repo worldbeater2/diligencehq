@@ -10,20 +10,40 @@ import { cn } from '@/lib/utils';
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
-/** Headline whose words rise into place when it enters the viewport. */
+/**
+ * Headline whose words rise into place when it enters the viewport.
+ * `instant` is for the first screen of a page: the words rise with CSS from the
+ * first paint, so the headline does not wait for the page's JavaScript.
+ */
 export function SplitWords({
   text,
   as: Tag = 'h2',
   className,
   delay = 0,
+  instant = false,
 }: {
   text: string;
   as?: ElementType;
   className?: string;
   delay?: number;
+  instant?: boolean;
 }) {
   const reduce = useReducedMotion();
   const words = text.split(' ');
+  if (instant) {
+    return (
+      <Tag className={className} aria-label={text}>
+        {words.map((word, index) => (
+          <span key={index} aria-hidden className="inline-block overflow-hidden pb-[0.08em] align-bottom">
+            <span className="reveal-word inline-block" style={{ animationDelay: `${delay + index * 0.045}s` }}>
+              {word}
+            </span>
+            {index < words.length - 1 && ' '}
+          </span>
+        ))}
+      </Tag>
+    );
+  }
   return (
     <Tag className={className} aria-label={text}>
       {words.map((word, index) => (
@@ -44,9 +64,16 @@ export function SplitWords({
   );
 }
 
-/** A block that fades up once. */
-export function FadeUp({ children, className, delay = 0 }: { children: ReactNode; className?: string; delay?: number }) {
+/** A block that fades up once. `instant` fades it up with CSS from the first paint, as for `SplitWords`. */
+export function FadeUp({ children, className, delay = 0, instant = false }: { children: ReactNode; className?: string; delay?: number; instant?: boolean }) {
   const reduce = useReducedMotion();
+  if (instant) {
+    return (
+      <div className={cn('reveal-fade', className)} style={{ animationDelay: `${delay}s` }}>
+        {children}
+      </div>
+    );
+  }
   return (
     <motion.div
       className={className}

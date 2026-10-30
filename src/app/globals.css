@@ -59,6 +59,37 @@ html.lenis body {
   overflow: hidden;
 }
 
+/* First-screen reveals (SplitWords / FadeUp with `instant`): the same motion as
+   the scroll reveals, in CSS, so it starts with the first paint. */
+@keyframes reveal-word {
+  from { transform: translateY(105%); }
+  to { transform: none; }
+}
+@keyframes reveal-fade {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: none; }
+}
+.reveal-word {
+  animation: reveal-word 0.9s var(--ease-out-quint) both;
+}
+.reveal-fade {
+  animation: reveal-fade 0.9s var(--ease-out-quint) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal-word,
+  .reveal-fade {
+    animation: none;
+  }
+}
+
+/* Grain over everything (Frame). The tile holds the old SVG noise filter with
+   its 0.32 opacity already applied, for a multiply blend. */
+.grain {
+  background-image: url("/media/grain.webp");
+  background-image: image-set(url("/media/grain.webp") 1x, url("/media/grain@2x.webp") 2x);
+  background-size: 256px 256px;
+}
+
 /* Focus: one quiet ring everywhere. */
 :focus-visible {
   outline: 1.5px solid #0d0d0d;

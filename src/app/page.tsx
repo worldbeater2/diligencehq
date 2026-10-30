@@ -29,14 +29,14 @@ export default function Home() {
       {/* Overview */}
       <section id="overview" data-orbit="x:.74 y:.5 size:.46 theta:1.82 opacity:1 grid:8" className="relative flex min-h-[100svh] flex-col pt-[72px]">
         <Container className={`flex flex-1 flex-col justify-center py-20 ${offset}`}>
-          <SplitWords as="h1" text="AI for work that matters." className="display max-w-[11ch] text-[clamp(52px,8.4vw,128px)] leading-[0.95]" />
-          <FadeUp delay={0.35} className="mt-8 max-w-[560px]">
+          <SplitWords as="h1" instant text="AI for work that matters." className="display max-w-[11ch] text-[clamp(52px,8.4vw,128px)] leading-[0.95]" />
+          <FadeUp instant delay={0.35} className="mt-8 max-w-[560px]">
             <p className="text-[clamp(17px,1.5vw,20px)] leading-[1.6] text-ink-2">
               We build intelligent products for professionals and organisations working where accuracy, context and judgment matter.
             </p>
             <p className="mt-4 text-[15px] text-mute">Diligence AI Technologies is the company behind DARA.</p>
           </FadeUp>
-          <FadeUp delay={0.5} className="mt-10 flex flex-wrap gap-3">
+          <FadeUp instant delay={0.5} className="mt-10 flex flex-wrap gap-3">
             <ButtonLink href={DARA_URL} external>Explore DARA</ButtonLink>
             <ButtonLink href="/about" variant="quiet">About Diligence</ButtonLink>
           </FadeUp>
@@ -50,7 +50,7 @@ export default function Home() {
               { href: '#context', title: 'Intelligence that understands context.', note: 'That is why context matters.' },
             ].map((item, i) => (
               <li key={item.href}>
-                <FadeUp delay={0.6 + i * 0.08} className="h-full border-l border-line pl-5 pr-6">
+                <FadeUp instant delay={0.6 + i * 0.08} className="h-full border-l border-line pl-5 pr-6">
                   <img src={`/media/orb-${i + 1}.png`} alt="" width={44} height={44} className="h-11 w-11" />
                   <Link href={item.href} className="group mt-5 block">
                     <span className="block text-[17px] tracking-[-0.015em] text-ink transition-opacity group-hover:opacity-70">{item.title}</span>

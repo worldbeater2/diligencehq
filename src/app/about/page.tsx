@@ -35,8 +35,8 @@ export default function AboutPage() {
       <section id="about" data-orbit="x:.87 y:.54 size:.34 theta:-1.7 opacity:.9 grid:9" className="flex min-h-[88svh] items-center pt-[72px]">
         <Container className={`py-24 ${offset}`}>
           <Label>About Diligence</Label>
-          <SplitWords as="h1" text="AI for work that matters." className="display mt-8 max-w-[11ch] text-[clamp(48px,7.6vw,116px)] leading-[0.96]" />
-          <FadeUp delay={0.35} className="mt-8 max-w-[540px] space-y-4">
+          <SplitWords as="h1" instant text="AI for work that matters." className="display mt-8 max-w-[11ch] text-[clamp(48px,7.6vw,116px)] leading-[0.96]" />
+          <FadeUp instant delay={0.35} className="mt-8 max-w-[540px] space-y-4">
             <p className="text-[clamp(17px,1.5vw,20px)] leading-[1.6] text-ink-2">
               We build intelligent products for professionals and organisations working where accuracy, context and judgment matter.
             </p>

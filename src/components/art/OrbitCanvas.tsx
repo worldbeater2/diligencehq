@@ -11,6 +11,9 @@ import { drawHalftoneSphere } from './halftone-core';
 import { createTextMask } from './text-mask';
 
 const FRAME_MS = 1000 / 30;
+// When nothing but the slow turn changes, half the frames are enough.
+const IDLE_FRAME_MS = 1000 / 15;
+const SETTLE_MS = 1000;
 
 export function OrbitCanvas() {
   const ref = useRef<HTMLCanvasElement>(null);
@@ -28,6 +31,8 @@ export function OrbitCanvas() {
     let spin = 0.6;
     let drift = 0;
     let previous = '';
+    let previousScene = '';
+    let movedAt = 0;
 
     // The canvas takes its size from CSS and is measured whenever that box
     // changes. On phones the first layout can be wider than the screen until
@@ -51,7 +56,12 @@ export function OrbitCanvas() {
       const x = mobile ? 0.5 + (orbit.x - 0.5) * 0.3 : orbit.x;
       const spacing = Math.max(5, orbit.grid * (mobile ? 0.88 : 1));
       // Text moves with scroll, so the scroll position is part of what is drawn.
-      const key = `${Math.round(window.scrollY)}|${x.toFixed(4)}|${orbit.y.toFixed(4)}|${radius.toFixed(2)}|${orbit.theta.toFixed(4)}|${orbit.opacity.toFixed(3)}|${spin.toFixed(4)}|${spacing.toFixed(2)}`;
+      const scene = `${Math.round(window.scrollY)}|${x.toFixed(4)}|${orbit.y.toFixed(4)}|${radius.toFixed(2)}|${orbit.theta.toFixed(4)}|${orbit.opacity.toFixed(3)}|${spacing.toFixed(2)}`;
+      if (scene !== previousScene) {
+        previousScene = scene;
+        movedAt = performance.now();
+      }
+      const key = `${scene}|${spin.toFixed(4)}`;
       if (key === previous) return;
       previous = key;
       drawHalftoneSphere(ctx, {
@@ -71,7 +81,8 @@ export function OrbitCanvas() {
 
     const tick = (now: number) => {
       frame = window.requestAnimationFrame(tick);
-      if (document.hidden || now - last < FRAME_MS) return;
+      const interval = now - movedAt < SETTLE_MS || Math.abs(drift) > 1e-4 ? FRAME_MS : IDLE_FRAME_MS;
+      if (document.hidden || now - last < interval) return;
       const elapsed = last ? now - last : FRAME_MS;
       last = now;
       if (!reduceMotion) {

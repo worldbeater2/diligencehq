@@ -23,14 +23,14 @@ export default function ContactPage() {
         <VideoBackground />
         <Container className={`relative py-24 ${offset}`}>
           <Label>Contact</Label>
-          <SplitWords as="h1" text="Build with us." className="display mt-8 text-[clamp(56px,9vw,140px)] leading-[0.94]" />
-          <FadeUp delay={0.35} className="mt-10 max-w-[480px] space-y-4">
+          <SplitWords as="h1" instant text="Build with us." className="display mt-8 text-[clamp(56px,9vw,140px)] leading-[0.94]" />
+          <FadeUp instant delay={0.35} className="mt-10 max-w-[480px] space-y-4">
             <p className="text-[clamp(17px,1.5vw,20px)] leading-[1.6] text-ink-2">
               We are building Diligence for people and organisations working on difficult problems.
             </p>
             <p className="text-[15px] text-mute">For product enquiries, partnerships, early access or general enquiries:</p>
           </FadeUp>
-          <FadeUp delay={0.45} className="mt-8">
+          <FadeUp instant delay={0.45} className="mt-8">
             <a
               href={`mailto:${CONTACT_EMAIL}`}
               className="display group inline-flex text-[clamp(26px,3.2vw,44px)] leading-none tracking-[-0.03em] text-ink"

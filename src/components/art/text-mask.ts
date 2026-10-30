@@ -8,6 +8,10 @@
 
 const CELL = 8;
 const FEATHER = 18;
+// Measuring every line of text is the costly part, so a measurement is reused
+// until the page scrolls, resizes or changes, and at most this long otherwise
+// (text can still move while it animates into place).
+const REFRESH_MS = 400;
 
 export type TextMask = { data: Float32Array; cols: number; rows: number; cell: number };
 
@@ -15,6 +19,8 @@ export function createTextMask() {
   const range = document.createRange();
   let nodes: Text[] = [];
   let stale = true;
+  let measured = '';
+  let measuredAt = 0;
   let mask: TextMask = { data: new Float32Array(0), cols: 0, rows: 0, cell: CELL };
 
   // Pages swap and sections reveal by changing the DOM; collect text again then.
@@ -58,6 +64,11 @@ export function createTextMask() {
 
   /** Measures the text currently on screen and returns the grid. */
   const update = (width: number, height: number): TextMask => {
+    const key = `${width}|${height}|${Math.round(window.scrollY)}`;
+    const now = performance.now();
+    if (!stale && key === measured && now - measuredAt < REFRESH_MS) return mask;
+    measured = key;
+    measuredAt = now;
     if (stale) collect();
     const cols = Math.ceil(width / CELL);
     const rows = Math.ceil(height / CELL);
